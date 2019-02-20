@@ -24,3 +24,5 @@ systemJSPrototype.delete = function (id) {
     });
   return delete this[REGISTRY][id];
 };
+
+export default systemJSPrototype;

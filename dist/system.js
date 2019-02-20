@@ -434,7 +434,7 @@
               load.C = load.n;
               load.E = null; // indicates completion
               loader.onload(load.id, null);
-            }, function () {
+            }, function (err) {
               loader.onload(load.id, err);
               throw err;
             });
@@ -463,15 +463,15 @@
    * Supports loading System.register via script tag injection
    */
 
-  let err$1;
+  let err;
   if (typeof window !== 'undefined')
     window.addEventListener('error', function (e) {
-      err$1 = e.error;
+      err = e.error;
     });
 
   const systemRegister = systemJSPrototype.register;
   systemJSPrototype.register = function (deps, declare) {
-    err$1 = undefined;
+    err = undefined;
     systemRegister.call(this, deps, declare);
   };
 
@@ -488,8 +488,8 @@
       script.addEventListener('load', function () {
         document.head.removeChild(script);
         // Note URL normalization issues are going to be a careful concern here
-        if (err$1)
-          return reject(err$1);
+        if (err)
+          return reject(err);
         else
           resolve(loader.getRegister());
       });
@@ -603,7 +603,7 @@
   systemJSPrototype.instantiate = function (url, parent) {
     if (url.slice(-5) !== '.wasm')
       return instantiate.call(this, url, parent);
-    
+
     return fetch(url)
     .then(function (res) {
       if (!res.ok)
@@ -611,7 +611,7 @@
 
       if (WebAssembly.compileStreaming)
         return WebAssembly.compileStreaming(res);
-      
+
       return res.arrayBuffer()
       .then(function (buf) {
         return WebAssembly.compile(buf);
@@ -649,11 +649,11 @@
 
   /*
    * Import map support for SystemJS
-   * 
+   *
    * <script type="systemjs-importmap">{}</script>
    * OR
    * <script type="systemjs-importmap" src=package.json></script>
-   * 
+   *
    * Only supports loading the first import map
    */
 

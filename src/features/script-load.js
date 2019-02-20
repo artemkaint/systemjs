@@ -38,3 +38,5 @@ systemJSPrototype.instantiate = function (url, firstParentUrl) {
     document.head.appendChild(script);
   });
 };
+
+export default systemJSPrototype;

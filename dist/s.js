@@ -356,15 +356,15 @@
    * Supports loading System.register via script tag injection
    */
 
-  let err$1;
+  let err;
   if (typeof window !== 'undefined')
     window.addEventListener('error', function (e) {
-      err$1 = e.error;
+      err = e.error;
     });
 
   const systemRegister = systemJSPrototype.register;
   systemJSPrototype.register = function (deps, declare) {
-    err$1 = undefined;
+    err = undefined;
     systemRegister.call(this, deps, declare);
   };
 
@@ -381,8 +381,8 @@
       script.addEventListener('load', function () {
         document.head.removeChild(script);
         // Note URL normalization issues are going to be a careful concern here
-        if (err$1)
-          return reject(err$1);
+        if (err)
+          return reject(err);
         else
           resolve(loader.getRegister());
       });

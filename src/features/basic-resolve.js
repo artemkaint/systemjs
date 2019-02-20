@@ -9,3 +9,5 @@ systemJSPrototype.resolve = function (id, parentUrl) {
   }
   return resolved;
 };
+
+export default systemJSPrototype;

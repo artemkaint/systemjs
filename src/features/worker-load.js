@@ -17,3 +17,5 @@ if (hasSelf && typeof importScripts === 'function')
       resolve(loader.getRegister());
     });
   };
+
+export default systemJSPrototype;

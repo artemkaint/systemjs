@@ -1,10 +1,10 @@
 /*
  * Import map support for SystemJS
- * 
+ *
  * <script type="systemjs-importmap">{}</script>
  * OR
  * <script type="systemjs-importmap" src=package.json></script>
- * 
+ *
  * Only supports loading the first import map
  */
 import { baseUrl as pageBaseUrl, parseImportMap, resolveImportMap } from '../common.js';
@@ -47,3 +47,5 @@ systemJSPrototype.resolve = function (id, parentUrl) {
 
   return resolveImportMap(id, parentUrl, importMap);
 };
+
+export default systemJSPrototype;
